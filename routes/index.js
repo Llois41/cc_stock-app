@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const fetch = require("node-fetch");
+const fetch = require('node-fetch');
 
 /* GET home page. */
 router.get('/', (req, res) => {
@@ -11,9 +11,9 @@ router.get('/', (req, res) => {
 module.exports = router;
 
 async function callApi(apiToken) {
-  apiUrl = 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=MSFT&interval=30min'
+  apiUrl = 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=MSFT&interval=1min'
   try {    
-    return getTimeSeries(apiUrl, apiToken) 
+    return getTimeSeries(apiUrl, apiToken)
     
   } catch (error) {
     console.error(error);
