@@ -4,7 +4,7 @@ async function sendRequest(){
     let equity = document.getElementById('equity').value;
     let equityEndpoint = makeRequest(equity)
     let response = await callEndpoint(equityEndpoint);
-    console.log('response' + response)
+    //console.log('response' + response)
     var resDiv = document.createElement("div"); 
     var newContent = document.createTextNode(response); 
     resDiv.appendChild(newContent);
@@ -20,7 +20,9 @@ function makeRequest(equity){
 async function callEndpoint(endpointUrl){    
   const response = await fetch(endpointUrl, {
         method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
       });
-  console.log('apiRes: ' + response)
-  return response
+  console.log(JSON.stringify(response));
 }

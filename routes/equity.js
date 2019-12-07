@@ -15,8 +15,9 @@ router.get('/:equity', (req, res) => {
     let datatypeParam = 'datatype=json'
     const apiUrl = baseUrl + functionParam + '&' + equityParam + '&' + interval + '&' + datatypeParam
     callApi(apiUrl, 'FDJ2MV6W3X1URKR2')
-    .then(data => res.send(data))
-    //.then(data => console.log(data))
+    .then(data => {
+      return res.send(data)})
+    //.then(data => console.log(JSON.stringify(data)))
     .catch(error => console.error(error))
 });
 
