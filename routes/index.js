@@ -4,8 +4,7 @@ const fetch = require('node-fetch');
 
 /* GET home page. */
 router.get('/', (req, res) => {
-  callApi('FDJ2MV6W3X1URKR2')
-  .then(data => res.send(data))
+  res.send('Hello from index')
 });
 
 module.exports = router;
