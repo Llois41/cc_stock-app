@@ -4,6 +4,8 @@ const fetch = require('node-fetch');
 const cors = require('cors');
 
 const baseUrl = 'https://www.alphavantage.co/query?'
+const datatypeParam = 'datatype=json'
+const API_KEY = 'FDJ2MV6W3X1URKR2'
 
 router.use(cors())
 
@@ -29,7 +31,15 @@ router.get('/:equity', (req, res) => {
 });
 
 router.get('/:equity/intraday-timeseries', (req, res) => {
-  res.send('intraday called')
+  const equityParam = 'symbol=' + req.params.equity;
+  const functionParam = 'function=TIME_SERIES_INTRADAY';
+  const intervalParam = 'interval=15min'
+
+  //Build Request URL
+  const requestUrl = baseUrl + functionParam + '&' + equityParam + '&' + intervalParam + '&' + datatypeParam
+  callApi(requestUrl, API_KEY)
+  .then(data => res.send(data))
+  .catch(error => console.error(error))
 })
 
 router.get('/:equity/daily-timeseries', (req, res) => {
