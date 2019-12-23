@@ -25,6 +25,7 @@ router.get('/:equity', (req, res) => {
 });
 
 router.get('/:equity/intraday-timeseries', (req, res) => {
+  console.log('Server wurde aufgerufen')
   const equityParam = 'symbol=' + req.params.equity;
   const functionParam = 'function=TIME_SERIES_INTRADAY';
   const intervalParam = 'interval=15min';
@@ -59,7 +60,7 @@ async function callApi(apiUrl, apiToken) {
   }
 
   async function getTimeSeries(url, apiToken) {
-    requestUrl = url + '&apikey=' + apiToken;
+    let requestUrl = url + '&apikey=' + apiToken;
     const response = await fetch(requestUrl, {
       method: 'GET',
     });
