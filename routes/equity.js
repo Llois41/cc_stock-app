@@ -15,6 +15,7 @@ router.get('/:equity', (req, res) => {
   const resObj = {
     '_links': {
       'self': { 'href': req.url },
+      'latest':{ 'href': req.url + '/latest'},
       'intraday': { 'href': req.url + '/intraday-timeseries' },
       'daily': { 'href': req.url + '/daily-timeseries' },
       'weekly': { 'href': req.url + '/weekly-timeseries' },
@@ -25,7 +26,6 @@ router.get('/:equity', (req, res) => {
 });
 
 router.get('/:equity/intraday-timeseries', (req, res) => {
-  console.log('Server wurde aufgerufen')
   const equityParam = 'symbol=' + req.params.equity;
   const functionParam = 'function=TIME_SERIES_INTRADAY';
   const intervalParam = 'interval=15min';
@@ -38,23 +38,54 @@ router.get('/:equity/intraday-timeseries', (req, res) => {
 })
 
 router.get('/:equity/daily-timeseries', (req, res) => {
-  res.send('daily called');
+  const equityParam = 'symbol=' + req.params.equity;
+  const functionParam = 'function=TIME_SERIES_DAILY';
+
+  //Build Request URL
+  const requestUrl = baseUrl + functionParam + '&' + equityParam + '&' + datatypeParam;
+  callApi(requestUrl, API_KEY)
+    .then(data => res.send(data))
+    .catch(error => console.error(error));
 })
 
 router.get('/:equity/weekly-timeseries', (req, res) => {
-  res.send('weekly called');
+  const equityParam = 'symbol=' + req.params.equity;
+  const functionParam = 'function=TIME_SERIES_WEEKLY';
+
+  //Build Request URL
+  const requestUrl = baseUrl + functionParam + '&' + equityParam + '&' + datatypeParam;
+  callApi(requestUrl, API_KEY)
+    .then(data => res.send(data))
+    .catch(error => console.error(error));
 })
 
 router.get('/:equity/monthly-timeseries', (req, res) => {
-  res.send('monthly called');
+  const equityParam = 'symbol=' + req.params.equity;
+  const functionParam = 'function=TIME_SERIES_MONTHLY';
+
+  //Build Request URL
+  const requestUrl = baseUrl + functionParam + '&' + equityParam + '&' + datatypeParam;
+  callApi(requestUrl, API_KEY)
+    .then(data => res.send(data))
+    .catch(error => console.error(error));
 })
 
+router.get('/:equity/latest', (req, res) => {
+  const equityParam = 'symbol=' + req.params.equity;
+  const functionParam = 'function=GLOBAL_QUOTE';
+
+  //Build Request URL
+  const requestUrl = baseUrl + functionParam + '&' + equityParam + '&' + datatypeParam;
+  callApi(requestUrl, API_KEY)
+    .then(data => res.send(data))
+    .catch(error => console.error(error));
+})
 
 module.exports = router;
 
 async function callApi(apiUrl, apiToken) {
   try {
-    return getTimeSeries(apiUrl, apiToken);
+    return await getTimeSeries(apiUrl, apiToken);
   } catch (error) {
     console.error(error);
   }
