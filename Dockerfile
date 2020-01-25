@@ -1,4 +1,5 @@
 FROM node:latest
 COPY . /src
-RUN cd /src; npm install
-ENTRYPOINT exec node src/bin/www
+WORKDIR /src
+RUN npm install
+ENTRYPOINT exec node bin/www

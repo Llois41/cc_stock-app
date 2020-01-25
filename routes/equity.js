@@ -5,10 +5,11 @@ const router = express.Router();
 const fetch = require('node-fetch');
 const cors = require('cors');
 
-const baseUrl = 'https://www.alphavantage.co/query?';
+// const baseUrl = 'https://www.alphavantage.co/query?';
+const baseUrl = process.env.ALPHAVANTAGE_API_URL
 const datatypeParam = 'datatype=json';
-const API_KEY = 'FDJ2MV6W3X1URKR2';
-
+const API_KEY = process.env.API_KEY;
+// const API_KEY = 'FDJ2MV6W3X1URKR2';
 router.use(cors());
 
 router.get('/:equity', (req, res) => {
@@ -29,6 +30,8 @@ router.get('/:equity/intraday-timeseries', (req, res) => {
   const equityParam = 'symbol=' + req.params.equity;
   const functionParam = 'function=TIME_SERIES_INTRADAY';
   const intervalParam = 'interval=15min';
+  //console.log(API_KEY);
+  //console.log(baseUrl);
 
   //Build Request URL
   const requestUrl = baseUrl + functionParam + '&' + equityParam + '&' + intervalParam + '&' + datatypeParam;
